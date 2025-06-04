@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'authentication',
-    'employee'
+    'formbuilder',
+    'employee',
 ]
 
 MIDDLEWARE = [
@@ -110,6 +112,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
 ]
 
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+
 CORS_ALLOW_ALL_ORIGINS = True
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -118,6 +126,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'authentication.exception.jwt_exception',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
